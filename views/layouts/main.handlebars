@@ -12,6 +12,9 @@
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
 
+    <!-- Add the MercadoPago SDK -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    
     <link rel="stylesheet" href="/assets/category-landing.css" media="screen, print">
 
     <link rel="stylesheet" href="/assets/category.css" media="screen, print">
@@ -43,8 +46,13 @@
 
     <body class="as-theme-light-heroimage">
 
+        <!-- Initialize MercadoPago with public key -->
+        <script>
+            const mp = new MercadoPago('APP_USR-ff96fe80-6866-4888-847e-c69250754d38');
+        </script>
+
         <div class="stack">
-            
+
              {{{body}}}
 
         </div>
@@ -53,5 +61,6 @@
             <circle class="mp-spinner-path" cx="50" cy="50" r="20" fill="none" stroke-miterlimit="10"></circle> </svg> 
         </div>
         <div id="ac-gn-viewport-emitter"> </div>
+
     </body>
 </html>

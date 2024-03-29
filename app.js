@@ -1,9 +1,11 @@
-import { MercadoPagoConfig, Preference } from 'mercadopago';
+const MercadoPago = require('mercadopago');
+const MercadoPagoConfig = MercadoPago.MercadoPagoConfig;
+const Preference = MercadoPago.Preference;
 
+// Initialize app
 var express = require('express');
 var exphbs = require('express-handlebars');
 var port = process.env.PORT || 3000
-
 var app = express();
 
 // base url
@@ -28,7 +30,7 @@ app.get('/', function (req, res) {
 
 app.get('/detail', function (req, res) {
     const preference = new Preference(client);
-    
+
     preference.create({
         body: {
             payment_methods: {
@@ -57,11 +59,11 @@ app.get('/detail', function (req, res) {
             items: [
                 {
                     id: 1234,
-                    title: req.query.title, 
+                    title: req.query.title,
                     description: 'Dispositivo móvil de Tienda e-commerce',
                     picture_url: base_url + '/assests/' + '003.jpg', // TODO
                     quantity: 1,
-                    unit_price: req.query.price,
+                    unit_price: parseFloat(req.query.price),
                     currency_id: 'ARG'
                 }
             ],
@@ -70,12 +72,15 @@ app.get('/detail', function (req, res) {
                 failure: base_url + '/failure',
                 pending: base_url + '/pending'
             },
+            auto_return: 'approved',
+            notification_url: base_url + '/notifications'
         }
     })
-        .then(console.log)
+        .then(preferenceResponse => {
+            const init_point = preferenceResponse.init_point
+            res.render('detail', {...req.query, init_point});
+        })
         .catch(console.log);
-
-    res.render('detail', req.query);
 });
 
 // Back urls
@@ -89,6 +94,12 @@ app.get('/failure', function (req, res) {
 
 app.get('/pending', function (req, res) {
     res.render('pending', req.query);
+});
+
+// Notifications
+app.post('/notifications', function (req, res) {
+    console.log(req.body);
+    res.sendStatus(200);
 });
 
 app.listen(port);

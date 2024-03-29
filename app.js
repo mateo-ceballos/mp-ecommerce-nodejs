@@ -14,7 +14,10 @@ const base_url = 'https://mateo-ceballos-mp-ecommerce-nodejs.onrender.com/';
 // configure mercado pago
 const client = new MercadoPagoConfig({
     accessToken: 'APP_USR-8709825494258279-092911-227a84b3ec8d8b30fff364888abeb67a-1160706432',
-    integrator_id: 'dev_24c65fb163bf11ea96500242ac130004'
+    integrator_id: 'dev_24c65fb163bf11ea96500242ac130004',
+    options:{
+        integratorId: 'dev_24c65fb163bf11ea96500242ac130004'
+    }
 });
 
 app.engine('handlebars', exphbs());

@@ -68,12 +68,12 @@ app.get('/detail', function (req, res) {
                 }
             ],
             back_urls: {
-                success: base_url + '/success',
-                failure: base_url + '/failure',
-                pending: base_url + '/pending'
+                success: base_url + 'success',
+                failure: base_url + 'failure',
+                pending: base_url + 'pending'
             },
             auto_return: 'approved',
-            notification_url: base_url + '/notifications'
+            notification_url: base_url + 'notifications'
         }
     })
         .then(preferenceResponse => {
